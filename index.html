@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart To Do List</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="theme-switch-wrapper">
+        <label class="theme-switch" for="checkbox">
+            <input type="checkbox" id="checkbox" />
+            <div class="slider round">
+                <i class="fa-solid fa-sun"></i>
+                <i class="fa-solid fa-moon"></i>
+            </div>
+        </label>
+    </div>
+    <header class="app-header">
+        <h1><i class="fa-solid fa-clipboard-check"></i> Smart To Do List</h1>
+        <div class="header-intro">
+            <p class="main-tagline">Manage your tasks efficiently and stay organized.</p>
+            <p class="sub-tagline">Your personal productivity hub, powered by intelligence.</p>
+        </div>
+    </header>
+    <div class="form">
+        <select id="filterCategory">
+            <option value="All">All</option>
+            <option value="school">School</option>
+            <option value="work">Work</option>
+            <option value="personal">Personal</option>
+        </select>
+        <select id="priority">
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+        </select>
+        <input type="date" id="dueDate">
+        <button class="add-btn">Add Task</button>
+    </div>
+    <input type="text" placeholder="Search tasks ...." id="searchInput">
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar">0%</div>
+    </div>
+    <button id="clearCompleted" class="secondary-btn">Clear Completed Tasks</button>
+    <div id="taskList"></div>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>

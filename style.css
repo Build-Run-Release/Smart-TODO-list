@@ -1,0 +1,345 @@
+/* 1. Import the Font (Place at the very top) */
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap');
+
+:root {
+    /* Light Mode Palette */
+    --primary: #2d3436;
+    --accent: #00b894;
+    --bg: #f0f2f5;
+    --card-bg: #ffffff;
+    --text-main: #2d3436;
+    --text-sub: #636e72;
+    --border: #dfe6e9;
+    --font-family: 'Bricolage Grotesque', sans-serif;
+}
+
+[data-theme="dark"] {
+    /* Dark Mode Palette */
+    --primary: #fab1a0;
+    --accent: #55efc4;
+    --bg: #18191a;
+    --card-bg: #242526;
+    --text-main: #f5f6f7;
+    --text-sub: #b0b3b8;
+    --border: #3a3b3c;
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--bg);
+    color: var(--text-main);
+    transition: all 0.3s ease;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centers items horizontally */
+    min-height: 100vh;
+}
+
+/* Ensure the form doesn't let children break out */
+.form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 500px; /* Constrained width for a better look */
+    background: var(--card-bg);
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    box-sizing: border-box; /* CRITICAL: Includes padding in width calculation */
+}
+
+/* 2. Header & Paragraph Refinement */
+h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    letter-spacing: -2px;
+    color: var(--primary);
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+.form p:first-of-type {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-main);
+    margin-bottom: 5px;
+}
+
+.form p:last-of-type {
+    font-size: 0.95rem;
+    color: var(--text-sub);
+    margin-bottom: 20px;
+}
+
+/* Apply this to all inputs to keep them contained */
+input[type="text"], 
+select, 
+input[type="date"],
+#searchInput {
+    width: 100%; 
+    box-sizing: border-box; /* Prevents input from sticking out */
+    padding: 14px;
+    margin: 8px 0;
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    font-family: inherit;
+    background-color: var(--card-bg);
+    color: var(--text-main);
+}
+
+/* Specifically styling the search input to match the form width */
+#searchInput {
+    max-width: 500px;
+    margin: 20px 0;
+}
+
+/* Hover and Focus States (The "Interactive" feel) */
+input[type="text"]:focus, 
+select:focus, 
+input[type="date"]:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px rgba(0, 184, 148, 0.15); /* Soft accent glow */
+    transform: translateY(-2px); /* Slight lift on focus */
+}
+
+/* Specific styling for the Dropdown Arrow */
+select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%232d3436'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 18px;
+    padding-right: 45px;
+}
+
+/* Adjust arrow color for Dark Mode */
+[data-theme="dark"] select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23f5f6f7'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+}
+
+/* Customizing the Placeholder Text */
+::placeholder {
+    color: var(--text-sub);
+    opacity: 0.7;
+}
+
+[data-theme="dark"] { --date-icon-filter: 1; }
+
+/* 4. Theme Toggle Switch */
+/* Container for the switch */
+.theme-switch {
+    display: inline-block;
+    height: 30px;
+    position: relative;
+    width: 60px;
+}
+
+.theme-switch input { display: none; }
+
+/* The track of the switch */
+.slider {
+    background-color: #3a3b3c;
+    bottom: 0;
+    cursor: pointer;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: .4s;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 8px;
+    border-radius: 34px;
+}
+
+/* The icons inside the track */
+.slider i {
+    font-size: 14px;
+    z-index: 1;
+}
+
+/* The Sun icon color (Light Mode) */
+.fa-sun { color: #f1c40f; }
+
+/* The Moon icon color (Dark Mode) */
+.fa-moon { color: #f5f6f7; }
+
+/* The sliding white circle */
+.slider:before {
+    background-color: #fff;
+    bottom: 3px;
+    content: "";
+    height: 24px;
+    left: 3px;
+    position: absolute;
+    transition: .4s;
+    width: 24px;
+    border-radius: 50%;
+    z-index: 2; /* Sits above the icons */
+}
+
+/* Moving the circle when checked */
+input:checked + .slider {
+    background-color: var(--accent);
+}
+
+input:checked + .slider:before {
+    transform: translateX(30px);
+}
+
+/* 1. Task Entry Animation */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.task-card {
+    background: var(--card-bg);
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    border-left: 6px solid var(--accent);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    width: 100%;
+    max-width: 600px;
+    
+    /* Apply the animation */
+    animation: slideIn 0.4s ease forwards;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* 2. Interactive Hover States */
+.task-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+
+.add-btn, .delete-btn {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.add-btn:active {
+    transform: scale(0.95);
+}
+
+.add-btn {
+    width: 100%;
+    padding: 16px;
+    font-family: var(--font-family);
+    font-size: 1.1rem;
+    font-weight: 800; /* Extra bold for Bricolage */
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    background-color: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+    box-shadow: 0 4px 6px rgba(0, 184, 148, 0.2);
+}
+
+.add-btn:hover {
+    background-color: #019477;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 15px rgba(0, 184, 148, 0.3);
+}
+
+.add-btn:active {
+    transform: translateY(0);
+}
+
+/* 3. Progress Bar Smoothness */
+.progress-bar {
+    height: 24px;
+    width: 0%;
+    background: linear-gradient(90deg, var(--accent), #55efc4);
+    color: white;
+    text-align: center;
+    font-size: 0.8rem;
+    font-weight: 700;
+    line-height: 24px;
+    border-radius: 20px;
+    transition: width 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Progress Bar at 100% */
+.progress-bar[style*="width: 100%"] {
+    background: linear-gradient(90deg, #00b894, #55efc4);
+    box-shadow: 0 0 15px rgba(0, 184, 148, 0.5);
+    animation: pulseGlow 2s infinite;
+}
+
+@keyframes pulseGlow {
+    0% { box-shadow: 0 0 5px rgba(0, 184, 148, 0.4); }
+    50% { box-shadow: 0 0 20px rgba(0, 184, 148, 0.7); }
+    100% { box-shadow: 0 0 5px rgba(0, 184, 148, 0.4); }
+}
+
+@keyframes slideOut {
+    to {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+}
+
+.task-card.removing {
+    animation: slideOut 0.3s ease forwards;
+}
+
+.completed {
+    opacity: 0.5;
+    text-decoration: line-through;
+}
+
+.completed i {
+    color: var(--text-sub) !important;
+}
+
+.secondary-btn {
+    background: transparent;
+    color: var(--text-sub);
+    border: 1px solid var(--border);
+    padding: 10px 20px;
+    border-radius: 30px;
+    font-family: var(--font-family);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 15px 0;
+    display: block; /* Allows margin: auto to work */
+}
+
+.secondary-btn:hover {
+    background-color: #ff7675; /* A soft red to indicate deletion */
+    color: white;
+    border-color: #ff7675;
+    transform: translateY(-2px);
+}
+
+.secondary-btn:active {
+    transform: translateY(0);
+}
+
+.app-header {
+    text-align: center;
+    max-width: 500px;
+    margin-bottom: 20px;
+}
+
+.progress-container {
+    width: 100%;
+    max-width: 500px;
+    background-color: var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+    margin-top: 10px;
+}
